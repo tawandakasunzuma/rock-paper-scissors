@@ -4,39 +4,46 @@ let computerScore = 0;
 
 function getComputerChoice(){
     const computerChoice = choices[Math.floor(Math.random()*3)];
-    return computerChoice;
+    return(computerChoice);
 }
 
 function getHumanChoice(){
-    const humanChoice = prompt("Select rock, paper or scissors: ").toLowerCase();
-    return humanChoice;
+    let validInput = false;
+    while (validInput == false){
+        const choice = prompt("Please select rock, paper or scissors: ");
+        if(choice == null){
+            continue
+        }
+        const choiceLowerCase = choice.toLowerCase();
+        if(choices.includes(choiceLowerCase)){
+            validInput = true;
+            return(choiceLowerCase);
+        }
+    }
 }
 
-
-    function playRound(humanChoice,computerChoice){
-        if (humanChoice == computerChoice){
+    function playRound(choiceLowerCase,computerChoice){
+        if (choiceLowerCase == computerChoice){
             console.log("It is a draw")
         }
-        else if(humanChoice == "rock" && computerChoice == "scissors" ||
-            humanChoice == "paper" && computerChoice == "rock"||
-            humanChoice == "scissors" && computerChoice == "paper")
+        else if(choiceLowerCase == "rock" && computerChoice == "scissors" ||
+            choiceLowerCase == "paper" && computerChoice == "rock"||
+            choiceLowerCase == "scissors" && computerChoice == "paper")
             
             {humanScore++;
-            console.log("You Win! " + humanChoice + " beats " + computerChoice);
+            console.log("You Win! " + choiceLowerCase + " beats " + computerChoice);
             console.log(humanScore + " : " + computerScore);}
 
-        else if(computerChoice == "rock" && humanChoice == "scissors" ||
-            computerChoice == "paper" && humanChoice == "rock"||
-            computerChoice == "scissors" && humanChoice == "paper")
-    
-            {computerScore++;
-            console.log("You Lose! " + computerChoice + " beats " + humanChoice);
+        else{computerScore++;
+            console.log("You Lose! " + computerChoice + " beats " + choiceLowerCase);
             console.log(humanScore + " : " + computerScore);}
-
-        else{prompt("Invalid entry. Goodbye.")}
     }
     
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-    
-    playRound(humanSelection,computerSelection);
+    function game(){
+        for(let i = 0; i < 5; i++){
+            const humanSelection = getHumanChoice();
+            const computerSelection = getComputerChoice();
+            console.log(playRound(humanSelection,computerSelection));
+        }
+    }
+game()
